@@ -2,21 +2,48 @@ name: driver
 version: 1.0.0+1
 publish_to: none
 description: A new Flutter project.
-environment: 
-  sdk: '>=2.18.2 <3.0.0'
+environment:
+  sdk: ">=2.18.2 <3.0.0"
 
-dependencies: 
+dependencies:
   cupertino_icons: ^1.0.2
   get: 4.6.5
-  flutter: 
+  flutter:
     sdk: flutter
+  dio: ^5.1.1
+  shared_preferences: ^2.1.0
+  flutter_screenutil: ^5.7.0
+  intl: ^0.18.0
+  flutter_easyloading: ^3.0.5
+  flutter_svg: ^1.1.6
+  soundpool: ^2.3.0
+  connectivity_plus: ^3.0.3
+  device_info_plus: ^8.1.0
+  perfect_volume_control: ^1.0.5
+
   firebase_core: ^2.9.0
+  dropdown_button2: ^1.8.9
+  firebase_auth: ^4.2.2
+  firebase_database: ^10.1.0
+  google_maps_flutter: ^2.2.5
 
-dev_dependencies: 
+  font_awesome_flutter: ^10.4.0
+  geolocator: ^9.0.2
+
+dev_dependencies:
   flutter_lints: 2.0.1
-  flutter_test: 
+  flutter_test:
     sdk: flutter
 
-flutter: 
+flutter:
   uses-material-design: true
-
+  assets:
+    - assets/images/
+    - assets/images/svg/
+    - assets/lottie/
+    - assets/audio/
+fonts:
+  - family: "Noto Sans JP"
+    fonts:
+      - asset: assets/fonts/NotoSansJP-Regular.ttf
+        weight: 400
