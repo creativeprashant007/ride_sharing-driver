@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 
 import '../modules/additionaldriverinfo/bindings/additionaldriverinfo_binding.dart';
 import '../modules/additionaldriverinfo/views/additionaldriverinfo_view.dart';
+import '../modules/driverdashboard/bindings/driverdashboard_binding.dart';
+import '../modules/driverdashboard/views/driverdashboard_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/login/bindings/login_binding.dart';
@@ -14,7 +16,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.LOGIN;
+  static const INITIAL = Routes.DRIVERDASHBOARD;
 
   static final routes = [
     GetPage(
@@ -36,6 +38,11 @@ class AppPages {
       name: _Paths.ADDITIONALDRIVERINFO,
       page: () => const AdditionaldriverinfoView(),
       binding: AdditionaldriverinfoBinding(),
+    ),
+    GetPage(
+      name: _Paths.DRIVERDASHBOARD,
+      page: () => const DriverdashboardView(),
+      binding: DriverdashboardBinding(),
     ),
   ];
 }
