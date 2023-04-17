@@ -9,7 +9,6 @@ import 'package:get/get.dart';
 import 'app/network/api_handler.dart';
 import 'app/routes/app_pages.dart';
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   APIHandler.initDio();
@@ -19,7 +18,7 @@ void main() async {
 
   runApp(
     ScreenUtilInit(
-      designSize: Size(360, 690),
+      designSize: const Size(360, 690),
       builder: ((context, child) {
         return GetMaterialApp(
             builder: EasyLoading.init(),

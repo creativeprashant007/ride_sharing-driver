@@ -1,3 +1,4 @@
+import 'package:driver/app/routes/app_pages.dart';
 import 'package:driver/app/widgets/atoms/button_text.dart';
 import 'package:driver/app/widgets/atoms/buttons.dart';
 import 'package:driver/app/widgets/components/custom_field.dart';
@@ -130,13 +131,13 @@ class AdditionaldriverinfoView extends GetView<AdditionaldriverinfoController> {
                       fillColor: AppColors.errorColor,
                       splashColor: AppColors.whiteDimColor,
                       child: Text(
-                        "Sinup",
+                        "Signup",
                         style: Get.theme.textTheme.labelLarge,
                       ),
                     ),
                     ButtonText(
                       onPressEvent: () {
-                        Get.back();
+                        Get.offAndToNamed(Routes.LOGIN);
                       },
                       btnName: "Already have an account? ",
                       btnName1: "Login",
