@@ -94,7 +94,7 @@ class LoginController extends GetxController {
       if (user.user != null) {
         circularLoader.hideCircularLoader();
         successMessage(message: "Login Successfull");
-        Get.toNamed(Routes.HOME);
+        Get.toNamed(Routes.DRIVERDASHBOARD);
       }
     } on PlatformException catch (err) {
       circularLoader.hideCircularLoader();

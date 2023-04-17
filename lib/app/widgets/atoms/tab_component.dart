@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
+
 import '/utils/colors.dart';
 
 class TabComponent extends StatelessWidget {
   final bool selected;
-  final String icon;
+  final IconData icon;
   final String title;
   const TabComponent({
     super.key,
     this.selected = false,
-    this.icon = "home.svg",
+    this.icon = Icons.home,
     this.title = "Home",
   });
 
@@ -21,15 +21,20 @@ class TabComponent extends StatelessWidget {
       children: [
         Container(
             decoration: BoxDecoration(
-              color: selected ? AppColors.primaryColor : AppColors.whiteColor,
+              color:
+                  selected ? AppColors.statusbarcolor1 : AppColors.whiteColor,
               borderRadius: const BorderRadius.all(Radius.elliptical(35, 35)),
             ),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: SvgPicture.asset(
-                "assets/images/svg/$icon",
+              child: Icon(
+                icon,
                 color: selected ? AppColors.whiteColor : AppColors.blackColor,
               ),
+              // child: SvgPicture.asset(
+              //   "assets/images/svg/$icon",
+              //   color: selected ? AppColors.whiteColor : AppColors.blackColor,
+              // ),
             )),
         Padding(
           padding: EdgeInsets.only(top: 5.h),
@@ -41,7 +46,7 @@ class TabComponent extends StatelessWidget {
                     ? const Color.fromRGBO(0, 0, 0, 1)
                     : const Color.fromRGBO(0, 0, 0, 0.6000000238418579),
                 fontFamily: 'Noto Sans JP',
-                fontSize: 12.sp,
+                fontSize: 10.sp,
                 letterSpacing:
                     0 /*percentages not used in flutter. defaulting to zero*/,
                 fontWeight: FontWeight.normal,
