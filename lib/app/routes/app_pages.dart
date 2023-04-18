@@ -1,3 +1,5 @@
+import 'package:driver/app/modules/splash/bindings/splash_binding.dart';
+import 'package:driver/app/modules/splash/views/splash_view.dart';
 import 'package:get/get.dart';
 
 import '../modules/additionaldriverinfo/bindings/additionaldriverinfo_binding.dart';
@@ -16,7 +18,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.LOGIN;
+  static const INITIAL = Routes.SPLASH;
 
   static final routes = [
     GetPage(
@@ -43,6 +45,11 @@ class AppPages {
       name: _Paths.DRIVERDASHBOARD,
       page: () => const DriverdashboardView(),
       binding: DriverdashboardBinding(),
+    ),
+    GetPage(
+      name: _Paths.SPLASH,
+      page: () => SplashView(),
+      binding: SplashBinding(),
     ),
   ];
 }
