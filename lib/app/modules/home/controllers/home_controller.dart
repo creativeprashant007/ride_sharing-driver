@@ -6,7 +6,9 @@ import 'package:driver/app/services/repositories/app_repo.dart';
 import 'package:driver/app/services/services/app_services.dart';
 import 'package:driver/app/widgets/circular_loader.dart';
 import 'package:driver/config/config.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_geofire/flutter_geofire.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -20,7 +22,8 @@ class HomeController extends GetxController {
   late GoogleMapController mapController;
   String userHomeAddress = "Add Home";
   Position? userCurrentPosition;
-
+  String availabilityTitle = "GO ONLINE";
+  bool isAvailable = false;
   CameraPosition initialCameraPosition = const CameraPosition(
     target: LatLng(37.42796133580664, -122.085749655962),
     zoom: 14,
@@ -29,7 +32,11 @@ class HomeController extends GetxController {
   BuildContext? context;
   AppRepo? appRepo;
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-
+  Geolocator? geolocator;
+  var locationOptions = const LocationSettings(
+    accuracy: LocationAccuracy.bestForNavigation,
+    distanceFilter: 4,
+  );
   @override
   // ignore: unnecessary_overrides
   void onInit() async {
@@ -72,5 +79,63 @@ class HomeController extends GetxController {
       userCurrentAddress = userHomeAddress;
       update();
     }
+  }
+
+  onGoOnlineButtonClick() {
+    if (!isAvailable) {
+      goOnline();
+      getLocationUpdate();
+      isAvailable = true;
+    } else {
+      goOffline();
+      isAvailable = false;
+    }
+    update();
+  }
+
+  void goOnline() {
+    Geofire.initialize("driversAvailable");
+    Geofire.setLocation(
+      currentFirebaseUser!.uid,
+      userCurrentPosition!.latitude,
+      userCurrentPosition!.longitude,
+    );
+    tripRequestRef = FirebaseDatabase.instance
+        .ref()
+        .child("drivers/${currentFirebaseUser!.uid}/newtrip");
+    tripRequestRef!.set("waiting");
+    tripRequestRef!.onValue.listen((DatabaseEvent event) {
+      print("event ${event}");
+    });
+  }
+
+  void goOffline() async {
+    Geofire.removeLocation(currentFirebaseUser!.uid);
+    tripRequestRef!.onDisconnect();
+    tripRequestRef!.remove();
+    tripRequestRef = null;
+  }
+
+  void getLocationUpdate() {
+    homePostionStream = Geolocator.getPositionStream(
+      locationSettings: const LocationSettings(
+        accuracy: LocationAccuracy.bestForNavigation,
+        distanceFilter: 2,
+      ),
+    ).listen((position) {
+      userCurrentPosition = position;
+
+      if (isAvailable) {
+        Geofire.setLocation(
+          currentFirebaseUser!.uid,
+          position.latitude,
+          position.longitude,
+        );
+      }
+      LatLng pos = LatLng(position.latitude, position.longitude);
+      CameraPosition cameraPosition = CameraPosition(target: pos, zoom: 14);
+      mapController
+          .animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+    });
   }
 }

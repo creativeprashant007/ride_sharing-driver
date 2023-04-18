@@ -11,49 +11,58 @@ class HomeView extends GetView<HomeController> {
   const HomeView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Column(
-      children: [
-        Container(
-          height: 100.h,
-          color: AppColors.statusbarcolor1,
-          child: Padding(
-            padding: EdgeInsets.only(top: 15.0.h),
-            child: Center(
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 50.w,
-                ),
-                child: Button(
-                  onPressed: () {},
-                  borderRadius: BorderRadius.circular(8.r),
-                  size: ButtonSize.small,
-                  fillColor: AppColors.whiteColor,
-                  splashColor: AppColors.whiteDimColor,
-                  child: Text(
-                    " GO OFFLINE ",
-                    style: Get.theme.textTheme.labelLarge!.copyWith(
-                      color: AppColors.errorColor,
+    return Scaffold(body: GetBuilder<HomeController>(builder: (con) {
+      return Column(
+        children: [
+          Container(
+            height: 100.h,
+            color: AppColors.statusbarcolor1,
+            child: Padding(
+              padding: EdgeInsets.only(top: 15.0.h),
+              child: Center(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 50.w,
+                  ),
+                  child: Button(
+                    onPressed: () {
+                      controller.onGoOnlineButtonClick();
+                    },
+                    borderRadius: BorderRadius.circular(8.r),
+                    size: ButtonSize.small,
+                    fillColor: !controller.isAvailable
+                        ? AppColors.greenColor
+                        : AppColors.whiteColor,
+                    splashColor: AppColors.whiteDimColor,
+                    child: Text(
+                      controller.isAvailable ? "GO OFFLINE" : "GO ONLINE ",
+                      style: Get.theme.textTheme.labelLarge!.copyWith(
+                        color: !controller.isAvailable
+                            ? AppColors.whiteColor
+                            : AppColors.errorColor,
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
           ),
-        ),
-        Expanded(
-          child: GoogleMap(
-            //padding: EdgeInsets.only(bottom: 256.h),
-            initialCameraPosition: controller.initialCameraPosition,
-            mapType: MapType.normal,
-            myLocationButtonEnabled: true,
-            myLocationEnabled: true,
-            onMapCreated: (GoogleMapController con) {
-              controller.onMapCreated(controller: con);
-            },
+          Expanded(
+            child: GoogleMap(
+              padding: EdgeInsets.only(top: 10.h),
+              initialCameraPosition: controller.initialCameraPosition,
+              mapType: MapType.normal,
+              myLocationButtonEnabled: true,
+              myLocationEnabled: true,
+              zoomControlsEnabled: true,
+              zoomGesturesEnabled: true,
+              onMapCreated: (GoogleMapController con) {
+                controller.onMapCreated(controller: con);
+              },
+            ),
           ),
-        ),
-      ],
-    ));
+        ],
+      );
+    }));
   }
 }

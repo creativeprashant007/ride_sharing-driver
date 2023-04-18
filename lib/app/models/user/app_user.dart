@@ -1,19 +1,19 @@
 import 'package:firebase_database/firebase_database.dart';
 
-class RiderData {
+class DriverData {
   String? fullName;
   String? email;
   String? phone;
   String? id;
 
-  RiderData({
+  DriverData({
     this.fullName,
     this.email,
     this.phone,
     this.id,
   });
 
-  RiderData.fromSnapsot(DataSnapshot snapshot) {
+  DriverData.fromSnapsot(DataSnapshot snapshot) {
     id = snapshot.key;
     phone = (snapshot.value as dynamic)['phone'];
     email = (snapshot.value as dynamic)['email'];
