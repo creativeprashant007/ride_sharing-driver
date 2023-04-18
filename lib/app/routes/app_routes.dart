@@ -8,6 +8,7 @@ abstract class Routes {
   static const REGISTRATION = _Paths.REGISTRATION;
   static const ADDITIONALDRIVERINFO = _Paths.ADDITIONALDRIVERINFO;
   static const DRIVERDASHBOARD = _Paths.DRIVERDASHBOARD;
+  static const SPLASH = _Paths.SPLASH;
 }
 
 abstract class _Paths {
@@ -17,4 +18,5 @@ abstract class _Paths {
   static const REGISTRATION = '/registration';
   static const ADDITIONALDRIVERINFO = '/additionaldriverinfo';
   static const DRIVERDASHBOARD = '/driverdashboard';
+  static const SPLASH = '/splash';
 }
