@@ -36,7 +36,8 @@ class RegistrationView extends GetView<RegistrationController> {
                       TextSpan(
                         children: [
                           TextSpan(
-                            text: 'SignUP As\n',
+                            text:
+                                controller.isEdit ? "Update\n" : 'SignUP As\n',
                             style: Get.theme.textTheme.headlineLarge!.copyWith(
                               fontSize: 25.sp,
                               fontWeight: FontWeight.w500,
@@ -45,7 +46,7 @@ class RegistrationView extends GetView<RegistrationController> {
                             ),
                           ),
                           TextSpan(
-                            text: 'Driver',
+                            text: controller.isEdit ? 'Driver Info' : 'Driver',
                             style: Get.theme.textTheme.displayLarge!.copyWith(
                               color: AppColors.errorColor,
                             ),
@@ -87,28 +88,33 @@ class RegistrationView extends GetView<RegistrationController> {
                     SizedBox(
                       height: 10.h,
                     ),
-                    CustomDropDownField(
-                      title: "Gender",
-                      isRequired: true,
-                      label: "Select Option",
-                      items: controller.genderType,
-                      errorMessage: "Select gender",
-                      onChanged: (DropdownType item) {
-                        controller.gender = item.value!;
-                      },
-                    ),
+                    controller.isEdit
+                        ? const SizedBox()
+                        : CustomDropDownField(
+                            title: "Gender",
+                            isRequired: true,
+                            label: "Select Option",
+                            items: controller.genderType,
+                            errorMessage: "Select gender",
+                            onChanged: (DropdownType item) {
+                              controller.gender = item.value!;
+                            },
+                          ),
                     SizedBox(
                       height: 10.h,
                     ),
-                    CustomField(
-                      title: "Password",
-                      isRequired: true,
-                      isObscureText: true,
-                      validator: (value) => controller.validatePassword(value),
-                      controller: controller.passwordController,
-                      maxline: 1,
-                      label: 'Password',
-                    ),
+                    controller.isEdit
+                        ? const SizedBox()
+                        : CustomField(
+                            title: "Password",
+                            isRequired: true,
+                            isObscureText: true,
+                            validator: (value) =>
+                                controller.validatePassword(value),
+                            controller: controller.passwordController,
+                            maxline: 1,
+                            label: 'Password',
+                          ),
                     SizedBox(
                       height: 30.h,
                     ),
@@ -125,18 +131,31 @@ class RegistrationView extends GetView<RegistrationController> {
                         style: Get.theme.textTheme.labelLarge,
                       ),
                     ),
-                    ButtonText(
-                      onPressEvent: () {
-                        Get.back();
-                      },
-                      btnName: "Already have an account? ",
-                      btnName1: "Login",
-                      style: Get.theme.textTheme.bodyMedium!
-                          .copyWith(fontWeight: FontWeight.w600),
-                      style1: Get.theme.textTheme.bodyMedium!.copyWith(
-                          color: AppColors.errorColor,
-                          fontWeight: FontWeight.w600),
-                    ),
+                    controller.isEdit
+                        ? ButtonText(
+                            onPressEvent: () {
+                              Get.back();
+                            },
+                            btnName: "Go",
+                            btnName1: "Back",
+                            style: Get.theme.textTheme.bodyMedium!
+                                .copyWith(fontWeight: FontWeight.w600),
+                            style1: Get.theme.textTheme.bodyMedium!.copyWith(
+                                color: AppColors.errorColor,
+                                fontWeight: FontWeight.w600),
+                          )
+                        : ButtonText(
+                            onPressEvent: () {
+                              Get.back();
+                            },
+                            btnName: "Already have an account? ",
+                            btnName1: "Login",
+                            style: Get.theme.textTheme.bodyMedium!
+                                .copyWith(fontWeight: FontWeight.w600),
+                            style1: Get.theme.textTheme.bodyMedium!.copyWith(
+                                color: AppColors.errorColor,
+                                fontWeight: FontWeight.w600),
+                          ),
                   ],
                 ),
               ),

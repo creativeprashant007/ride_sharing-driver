@@ -131,22 +131,35 @@ class AdditionaldriverinfoView extends GetView<AdditionaldriverinfoController> {
                       fillColor: AppColors.errorColor,
                       splashColor: AppColors.whiteDimColor,
                       child: Text(
-                        "Signup",
+                        controller.isEdit ? "Update" : "Signup",
                         style: Get.theme.textTheme.labelLarge,
                       ),
                     ),
-                    ButtonText(
-                      onPressEvent: () {
-                        Get.offAndToNamed(Routes.LOGIN);
-                      },
-                      btnName: "Already have an account? ",
-                      btnName1: "Login",
-                      style: Get.theme.textTheme.bodyMedium!
-                          .copyWith(fontWeight: FontWeight.w600),
-                      style1: Get.theme.textTheme.bodyMedium!.copyWith(
-                          color: AppColors.errorColor,
-                          fontWeight: FontWeight.w600),
-                    ),
+                    controller.isEdit
+                        ? ButtonText(
+                            onPressEvent: () {
+                              Get.back();
+                            },
+                            btnName: "GO",
+                            btnName1: "Back",
+                            style: Get.theme.textTheme.bodyMedium!
+                                .copyWith(fontWeight: FontWeight.w600),
+                            style1: Get.theme.textTheme.bodyMedium!.copyWith(
+                                color: AppColors.errorColor,
+                                fontWeight: FontWeight.w600),
+                          )
+                        : ButtonText(
+                            onPressEvent: () {
+                              Get.offAndToNamed(Routes.LOGIN);
+                            },
+                            btnName: "Already have an account? ",
+                            btnName1: "Login",
+                            style: Get.theme.textTheme.bodyMedium!
+                                .copyWith(fontWeight: FontWeight.w600),
+                            style1: Get.theme.textTheme.bodyMedium!.copyWith(
+                                color: AppColors.errorColor,
+                                fontWeight: FontWeight.w600),
+                          ),
                   ],
                 ),
               ),
