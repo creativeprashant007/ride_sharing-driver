@@ -144,7 +144,10 @@ class LoginView extends GetView<LoginController> {
                     ),
                     ButtonText(
                       onPressEvent: () {
-                        Get.toNamed(Routes.REGISTRATION);
+                        Get.toNamed(
+                          Routes.REGISTRATION,
+                          arguments: {"isEdit": false},
+                        );
                       },
                       btnName: "New user? ",
                       btnName1: "Create Account",

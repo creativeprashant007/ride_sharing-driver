@@ -21,6 +21,7 @@ class RegistrationController extends GetxController {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   CircularLoader circularLoader = Get.put(CircularLoader());
   BuildContext? context;
+  bool isEdit = false;
 
   RxBool isEmailAuth = true.obs;
 
@@ -68,17 +69,26 @@ class RegistrationController extends GetxController {
   validateData() async {
     if (formKey.currentState!.validate()) {
       try {
-        Map<String, dynamic> credential = {
-          "username": usernameController.text,
-          "email": emailController.text,
-          "phone": phoneController.text,
-          "gender": gender,
-          "password": passwordController.text,
-          "isVerified":false,
-        };
-        Get.toNamed(Routes.ADDITIONALDRIVERINFO,
-            arguments: {"data": credential});
-        //signupUser();
+        if (isEdit) {
+          Map<String, dynamic> credential = {
+            "username": usernameController.text,
+            "email": emailController.text,
+            "phone": phoneController.text,
+          };
+          Get.toNamed(Routes.ADDITIONALDRIVERINFO,
+              arguments: {"data": credential, "isEdit":true});
+        } else {
+          Map<String, dynamic> credential = {
+            "username": usernameController.text,
+            "email": emailController.text,
+            "phone": phoneController.text,
+            "gender": gender,
+            "password": passwordController.text,
+            "isVerified": false,
+          };
+          Get.toNamed(Routes.ADDITIONALDRIVERINFO,
+              arguments: {"data": credential, "isEdit":false});
+        }
       } catch (_) {}
     }
   }
@@ -121,7 +131,7 @@ class RegistrationController extends GetxController {
           'password': passwordController.text.trim(),
           'phone': phoneController.text.trim(),
           'gender': gender,
-          "isVerify":false,
+          "isVerify": false,
         };
         newUserRefrence.set(userMap);
         circularLoader.hideCircularLoader();
@@ -144,5 +154,17 @@ class RegistrationController extends GetxController {
     phoneController.dispose();
     usernameController.dispose();
     super.dispose();
+  }
+
+  @override
+  void onInit() {
+    isEdit = Get.arguments["isEdit"];
+    if (isEdit) {
+      usernameController.text = currentUserInfo!.fullName!;
+      emailController.text = currentUserInfo!.email!;
+      phoneController.text = currentUserInfo!.phone!;
+    }
+
+    super.onInit();
   }
 }

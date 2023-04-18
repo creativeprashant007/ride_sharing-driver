@@ -1,3 +1,4 @@
+import 'package:driver/app/routes/app_pages.dart';
 import 'package:driver/app/widgets/circular_loader.dart';
 import 'package:driver/app/widgets/components/common_widgets.dart';
 import 'package:driver/global_constants/global_constants.dart';
@@ -22,10 +23,11 @@ class AdditionaldriverinfoController extends GetxController {
   final TextEditingController bilBookNumberController = TextEditingController();
   final TextEditingController licenseNumberController = TextEditingController();
   final TextEditingController driverExperController = TextEditingController();
-
+  bool isEdit = false;
   @override
   void onInit() {
     credential = Get.arguments["data"];
+    isEdit = Get.arguments["isEdit"];
     super.onInit();
   }
 
@@ -54,16 +56,27 @@ class AdditionaldriverinfoController extends GetxController {
         };
         credential.addAll(vehicleinfo);
 
-        final UserCredential user = await auth.createUserWithEmailAndPassword(
-            email: credential["email"], password: credential["password"]);
+        if (isEdit) {
+          DatabaseReference newUserRefrence = FirebaseDatabase.instance
+              .ref()
+              .child('driver/${currentUserInfo!.id!}');
+          newUserRefrence.update(credential);
+          successMessage(message: "Profile update successfully");
+          Get.offNamedUntil(Routes.DRIVERDASHBOARD, (route) => false);
+        } else {
+          final UserCredential user = await auth.createUserWithEmailAndPassword(
+              email: credential["email"], password: credential["password"]);
 
-        if (user.user != null) {
-          DatabaseReference newUserRefrence =
-              FirebaseDatabase.instance.ref().child('driver/${user.user!.uid}');
+          if (user.user != null) {
+            DatabaseReference newUserRefrence = FirebaseDatabase.instance
+                .ref()
+                .child('driver/${user.user!.uid}');
 
-          newUserRefrence.set(credential);
-          circularLoader.hideCircularLoader();
-          successMessage(message: "Register successfully");
+            newUserRefrence.set(credential);
+            circularLoader.hideCircularLoader();
+            successMessage(message: "Register successfully");
+            Get.offNamedUntil(Routes.DRIVERDASHBOARD, (route) => false);
+          }
         }
       }
     } on PlatformException catch (err) {

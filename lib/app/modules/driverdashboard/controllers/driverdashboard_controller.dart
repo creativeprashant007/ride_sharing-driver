@@ -50,6 +50,7 @@ class DriverdashboardController extends GetxController {
   void onInit() {
     Get.put(HomeController());
     Get.put(ProfileViewController());
+
     persistentTabController = PersistentTabController();
     super.onInit();
   }
