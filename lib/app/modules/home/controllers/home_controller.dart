@@ -37,12 +37,17 @@ class HomeController extends GetxController {
     accuracy: LocationAccuracy.bestForNavigation,
     distanceFilter: 4,
   );
+
   @override
   // ignore: unnecessary_overrides
   void onInit() async {
     appRepo = Get.put(AppRepoImplementaion());
-    await callPermission();
-    setupPositionLocator();
+
+    Future.delayed(Duration(seconds: 0), (() async {
+      await callPermission();
+      setupPositionLocator();
+    }));
+
     super.onInit();
   }
 

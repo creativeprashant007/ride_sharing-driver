@@ -9,6 +9,7 @@ abstract class Routes {
   static const ADDITIONALDRIVERINFO = _Paths.ADDITIONALDRIVERINFO;
   static const DRIVERDASHBOARD = _Paths.DRIVERDASHBOARD;
   static const SPLASH = _Paths.SPLASH;
+  static const PROFILE_VIEW = _Paths.PROFILE_VIEW;
 }
 
 abstract class _Paths {
@@ -19,4 +20,5 @@ abstract class _Paths {
   static const ADDITIONALDRIVERINFO = '/additionaldriverinfo';
   static const DRIVERDASHBOARD = '/driverdashboard';
   static const SPLASH = '/splash';
+  static const PROFILE_VIEW = '/profile-view';
 }
