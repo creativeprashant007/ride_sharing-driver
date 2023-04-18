@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:geolocator/geolocator.dart';
@@ -10,6 +11,8 @@ import 'package:intl/intl.dart';
 import 'package:perfect_volume_control/perfect_volume_control.dart';
 import 'package:soundpool/soundpool.dart';
 
+import '../app/models/user/app_user.dart';
+import '../global_constants/global_constants.dart';
 import '/utils/number_formatter.dart';
 import '../app/widgets/components/common_widgets.dart';
 import '../utils/asset_strings.dart';
@@ -32,6 +35,21 @@ bool isValidEmail({String? email}) {
           r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
       .hasMatch(email!);
   return emailValid;
+}
+
+void getCurrentUserInfo() async {
+  currentFirebaseUser = auth.currentUser;
+  print("current firevase user${auth.currentUser}");
+
+  String userId = currentFirebaseUser!.uid;
+  DatabaseReference databaseReference =
+      FirebaseDatabase.instance.ref().child('users/$userId');
+  databaseReference.once().then((DatabaseEvent snapshot) {
+    if (snapshot.snapshot.value != null) {
+      print("user is ${snapshot.snapshot.value}");
+      currentUserInfo = DriverData.fromSnapsot(snapshot.snapshot);
+    }
+  });
 }
 
 Future<bool> getRealDiviceStatus() async {

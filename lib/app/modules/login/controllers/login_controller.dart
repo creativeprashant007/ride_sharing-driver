@@ -1,6 +1,7 @@
 import 'package:driver/app/routes/app_pages.dart';
 import 'package:driver/app/widgets/circular_loader.dart';
 import 'package:driver/app/widgets/components/common_widgets.dart';
+import 'package:driver/functions/universal_functions.dart';
 import 'package:driver/global_constants/global_constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -94,6 +95,7 @@ class LoginController extends GetxController {
       if (user.user != null) {
         circularLoader.hideCircularLoader();
         successMessage(message: "Login Successfull");
+        getCurrentUserInfo();
         Get.toNamed(Routes.DRIVERDASHBOARD);
       }
     } on PlatformException catch (err) {

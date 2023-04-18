@@ -1,3 +1,4 @@
+import 'package:driver/functions/universal_functions.dart';
 import 'package:driver/utils/memory_management.dart';
 import 'package:driver/utils/theme/theme.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -13,8 +14,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   APIHandler.initDio();
   MemoryManagement.init();
-
   await Firebase.initializeApp();
+  getCurrentUserInfo();
 
   runApp(
     ScreenUtilInit(
