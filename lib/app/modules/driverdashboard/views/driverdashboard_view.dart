@@ -10,8 +10,8 @@ class DriverdashboardView extends GetView<DriverdashboardController> {
   const DriverdashboardView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final homectrl = Get.put(HomeController());
-    homectrl.context = context;
+    // final homectrl = Get.put(HomeController());
+    // homectrl.context = context;
     return Scaffold(
       // appBar: AppBar(
       //   title: const Text('DriverdashboardView'),

@@ -116,7 +116,7 @@ class AppTheme {
           button: button,
         ),
         appBarTheme: const AppBarTheme(
-          backgroundColor: AppColors.primaryColor,
+          backgroundColor: AppColors.statusbarcolor1,
           iconTheme: IconThemeData(color: AppColors.whiteColor),
           titleTextStyle: TextStyle(
             color: AppColors.whiteColor,

@@ -46,7 +46,7 @@ class SplashController extends GetxController
 
   offSplash() {
     if (currentFirebaseUser != null) {
-      Get.offAndToNamed(Routes.HOME);
+      Get.offAndToNamed(Routes.DRIVERDASHBOARD);
     } else {
       Get.offAndToNamed(Routes.LOGIN);
     }

@@ -1,4 +1,7 @@
+import 'package:driver/app/modules/home/controllers/home_controller.dart';
 import 'package:driver/app/modules/home/views/home_view.dart';
+import 'package:driver/app/modules/profile_view/controllers/profile_view_controller.dart';
+import 'package:driver/app/modules/profile_view/views/profile_view_view.dart';
 import 'package:driver/app/widgets/atoms/tab_component.dart';
 import 'package:driver/utils/colors.dart';
 import 'package:flutter/material.dart';
@@ -40,11 +43,13 @@ class DriverdashboardController extends GetxController {
     const HomeView(),
     Container(),
     Container(),
-    Container(),
+    const ProfileViewView(),
   ];
 
   @override
   void onInit() {
+    Get.put(HomeController());
+    Get.put(ProfileViewController());
     persistentTabController = PersistentTabController();
     super.onInit();
   }

@@ -11,6 +11,7 @@ class HomeView extends GetView<HomeController> {
   const HomeView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    controller.context = context;
     return Scaffold(body: GetBuilder<HomeController>(builder: (con) {
       return Column(
         children: [

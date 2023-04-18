@@ -74,6 +74,7 @@ class RegistrationController extends GetxController {
           "phone": phoneController.text,
           "gender": gender,
           "password": passwordController.text,
+          "isVerified":false,
         };
         Get.toNamed(Routes.ADDITIONALDRIVERINFO,
             arguments: {"data": credential});
@@ -113,13 +114,14 @@ class RegistrationController extends GetxController {
 
       if (user.user != null) {
         DatabaseReference newUserRefrence =
-            FirebaseDatabase.instance.ref().child('users/${user.user!.uid}');
+            FirebaseDatabase.instance.ref().child('driver/${user.user!.uid}');
         Map userMap = {
           'name': usernameController.text.trim(),
           'email': emailController.text.trim(),
           'password': passwordController.text.trim(),
           'phone': phoneController.text.trim(),
           'gender': gender,
+          "isVerify":false,
         };
         newUserRefrence.set(userMap);
         circularLoader.hideCircularLoader();
@@ -141,7 +143,6 @@ class RegistrationController extends GetxController {
     emailController.dispose();
     phoneController.dispose();
     usernameController.dispose();
-
     super.dispose();
   }
 }

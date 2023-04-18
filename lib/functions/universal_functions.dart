@@ -11,10 +11,10 @@ import 'package:intl/intl.dart';
 import 'package:perfect_volume_control/perfect_volume_control.dart';
 import 'package:soundpool/soundpool.dart';
 
-import '../app/models/user/app_user.dart';
-import '../global_constants/global_constants.dart';
 import '/utils/number_formatter.dart';
+import '../app/models/user/app_user.dart';
 import '../app/widgets/components/common_widgets.dart';
+import '../global_constants/global_constants.dart';
 import '../utils/asset_strings.dart';
 import '../utils/memory_management.dart';
 
@@ -39,17 +39,19 @@ bool isValidEmail({String? email}) {
 
 void getCurrentUserInfo() async {
   currentFirebaseUser = auth.currentUser;
-  print("current firevase user${auth.currentUser}");
+  if (currentFirebaseUser != null) {
+    print("current firevase user${auth.currentUser}");
 
-  String userId = currentFirebaseUser!.uid;
-  DatabaseReference databaseReference =
-      FirebaseDatabase.instance.ref().child('users/$userId');
-  databaseReference.once().then((DatabaseEvent snapshot) {
-    if (snapshot.snapshot.value != null) {
-      print("user is ${snapshot.snapshot.value}");
-      currentUserInfo = DriverData.fromSnapsot(snapshot.snapshot);
-    }
-  });
+    String userId = currentFirebaseUser!.uid;
+    DatabaseReference databaseReference =
+        FirebaseDatabase.instance.ref().child('driver/$userId');
+    databaseReference.once().then((DatabaseEvent snapshot) {
+      if (snapshot.snapshot.value != null) {
+        print("user is ${snapshot.snapshot.value}");
+        currentUserInfo = DriverData.fromSnapsot(snapshot.snapshot);
+      }
+    });
+  }
 }
 
 Future<bool> getRealDiviceStatus() async {
