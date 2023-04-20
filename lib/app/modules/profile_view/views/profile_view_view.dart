@@ -252,6 +252,7 @@ class ProfileViewView extends GetView<ProfileViewController> {
                         SizedBox(
                           height: 3.h,
                         ),
+                        
                         Container(
                           height: 1,
                           color: AppColors.whiteColor,
