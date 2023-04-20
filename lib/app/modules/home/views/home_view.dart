@@ -27,7 +27,8 @@ class HomeView extends GetView<HomeController> {
                   ),
                   child: Button(
                     onPressed: () {
-                      controller.onGoOnlineButtonClick();
+                      controller.confirmDialog();
+                      // controller.onGoOnlineButtonClick();
                     },
                     borderRadius: BorderRadius.circular(8.r),
                     size: ButtonSize.small,

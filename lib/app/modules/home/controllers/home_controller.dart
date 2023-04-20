@@ -5,6 +5,7 @@ import 'package:driver/app/models/geocode/geocode_response.dart';
 import 'package:driver/app/services/repositories/app_repo.dart';
 import 'package:driver/app/services/services/app_services.dart';
 import 'package:driver/app/widgets/circular_loader.dart';
+import 'package:driver/app/widgets/components/app_alert_dialog.dart';
 import 'package:driver/config/config.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -43,7 +44,7 @@ class HomeController extends GetxController {
   void onInit() async {
     appRepo = Get.put(AppRepoImplementaion());
 
-    Future.delayed(Duration(seconds: 0), (() async {
+    Future.delayed(const Duration(seconds: 0), (() async {
       await callPermission();
       setupPositionLocator();
     }));
@@ -91,9 +92,11 @@ class HomeController extends GetxController {
       goOnline();
       getLocationUpdate();
       isAvailable = true;
+      Get.back();
     } else {
       goOffline();
       isAvailable = false;
+      Get.back();
     }
     update();
   }
@@ -110,7 +113,7 @@ class HomeController extends GetxController {
         .child("drivers/${currentFirebaseUser!.uid}/newtrip");
     tripRequestRef!.set("waiting");
     tripRequestRef!.onValue.listen((DatabaseEvent event) {
-      print("event ${event}");
+      print("event $event");
     });
   }
 
@@ -142,5 +145,19 @@ class HomeController extends GetxController {
       mapController
           .animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
     });
+  }
+
+  confirmDialog() {
+    appAlertDialog(
+        title: 'Change Status',
+        middleText: 'Are you sure you want to change the status?',
+        textbuttonName1: 'No',
+        textbuttonName2: 'Yes',
+        onPressedButton1: () {
+          Get.back();
+        },
+        onPressedButton2: () {
+          onGoOnlineButtonClick();
+        });
   }
 }
