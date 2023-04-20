@@ -18,34 +18,16 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   APIHandler.initDio();
   MemoryManagement.init();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: firebaseOptions(),
+  );
 
   getCurrentUserInfo();
 
-  final FirebaseApp app = await Firebase.initializeApp(
-    // name: 'db7',
-    options: Platform.isIOS
-        ? const FirebaseOptions(
-            appId: '1:297855924061:ios:c6de2b69b03a5be8',
-            apiKey: 'AIzaSyBEnYVcxOEaejEzT6UyG8l8n5EZ2mT9C1I',
-            projectId: 'flutter-firebase-plugins',
-            messagingSenderId: '589846735931',
-            databaseURL: 'https://cab-rider-35e1c-default-rtdb.firebaseio.com',
-          )
-        : const FirebaseOptions(
-            appId: '1:818602134431:android:4bc8c8d9cd418606530baa',
-            apiKey: "AIzaSyB1bfvCDz-0oIWHbRNyShCVv6bsHWE8jhg",
-            messagingSenderId: '297855924061',
-            projectId: 'flutter-firebase-plugins',
-            databaseURL:
-                "https://ridesharing-584f0-default-rtdb.firebaseio.com",
-          ),
-  );
   FirebaseServices firebaseServices = FirebaseServices.instance;
   firebaseServices.defaultApp = await firebaseServices.initialiseFirebase();
   firebaseServices.messaging = await firebaseServices.initFirebaseMessaging();
-  firebaseServices.settings =
-      await firebaseServices.initFirebaseNotificationSettings();
+  firebaseServices.settings = await firebaseServices.initFirebaseNotificationSettings();
   firebaseServices.defaultApp?.setAutomaticDataCollectionEnabled(true);
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
@@ -57,8 +39,10 @@ void main() async {
         message.notification!.title!,
         message.notification!.body!,
         snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.red,
       );
-      print('Message also contained a notification: ${message.notification!.title!}');
+      print(
+          'Message also contained a notification: ${message.notification!.title!}');
     }
   });
 
