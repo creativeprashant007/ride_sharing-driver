@@ -143,4 +143,6 @@ class HomeController extends GetxController {
           .animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
     });
   }
+
+
 }
