@@ -2,7 +2,9 @@ import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:geolocator/geolocator.dart';
@@ -185,4 +187,26 @@ callPermission() async {
         message:
             "Location permissions are permanently denied, we cannot request permissions.");
   }
+}
+
+handleFirebaseMessage()async {
+ await FirebaseMessaging.instance.requestPermission();
+  FirebaseMessaging.onMessage.listen((event) {
+    print(event.notification!.title!);
+    if (event.notification != null) {
+      // Get.snackbar(
+      //   event.notification!.title!,
+      //   event.notification!.body!,
+      //   snackPosition: SnackPosition.TOP,
+      // );
+    }
+  });
+
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
+  FirebaseMessaging.onMessageOpenedApp.listen((event) {});
+}
+
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
 }
